@@ -32,7 +32,7 @@ public void setMines(){
     
     if (!(mines.contains(buttons[r][c]))){
       mines.add(buttons[r][c]);
-      System.out.println(r + ", " + c);
+      //System.out.println(r + ", " + c);
     }
     
     NUM_MINES++;
