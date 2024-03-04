@@ -6,24 +6,24 @@ private ArrayList <MSButton> mines = new ArrayList <MSButton>(); //ArrayList of 
 
 int score = 0; //////
 
-void setup ()
-{
-    size(400, 440);
-    textAlign(CENTER,CENTER);
+void setup(){
+  size(400, 440);
+  textAlign(CENTER,CENTER);
     
-    // make the manager
-    Interactive.make( this );
+  // make the manager
+  Interactive.make(this);
     
-    //your code to initialize buttons goes here
-    buttons = new MSButton[NUM_ROWS][NUM_COLS];
-    for(int i=0;i<NUM_ROWS;i++){
-      for(int j=0;j<NUM_COLS;j++){
-        buttons[i][j] = new MSButton(i,j);
-      }
+  buttons = new MSButton[NUM_ROWS][NUM_COLS];
+    
+  for (int i = 0; i < NUM_ROWS; i++) {
+    for (int j = 0; j < NUM_COLS; j++) {
+      buttons[i][j] = new MSButton(i, j);
     }
-    
-    setMines();
+  }
+
+  setMines();
 }
+
 public void setMines(){
   int NUM_MINES = 0;
   while (NUM_MINES < 5){
