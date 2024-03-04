@@ -94,7 +94,7 @@ public void displayWinningMessage()
   }
   fill(255);
   textSize(20);
-  text("Congradulations!", width / 2, height - 20);
+  text("Congratulations!", width / 2, height - 20);
 }
 
 
