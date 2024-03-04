@@ -24,21 +24,36 @@ void setup ()
     
     setMines();
 }
-public void setMines()
-{
-    int num_mines = 5;
-    while(num_mines > 0){
-      int r = (int)(Math.random()*10);
-      int c = (int)(Math.random()*10);
-      if(!mines.contains(buttons[r][c])){
-        mines.add(buttons[r][c]);
-        System.out.println(r+", "+c);
-      }
-      
-      num_mines--;
+public void setMines(){
+  int NUM_MINES = 0;
+  while (NUM_MINES < 5){
+    int r = (int)(Math.random() * NUM_ROWS); 
+    int c = (int)(Math.random() * NUM_COLS);
+    
+    if (!(mines.contains(buttons[r][c]))){
+      mines.add(buttons[r][c]);
+      System.out.println(r + ", " + c);
     }
     
+    NUM_MINES++;
+  }
 }
+
+//public void setMines()
+//{
+//    int num_mines = 5;
+//    while(num_mines > 0){
+//      int r = (int)(Math.random()*10);
+//      int c = (int)(Math.random()*10);
+//      if(!mines.contains(buttons[r][c])){
+//        mines.add(buttons[r][c]);
+//        System.out.println(r+", "+c);
+//      }
+      
+//      num_mines--;
+//    }
+    
+//}
 
 public void draw ()
 {
