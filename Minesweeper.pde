@@ -6,24 +6,24 @@ private ArrayList <MSButton> mines = new ArrayList <MSButton>(); //ArrayList of 
 
 int score = 0; //////
 
-void setup(){
-  size(400, 440);
-  textAlign(CENTER,CENTER);
+void setup ()
+{
+    size(400, 440);
+    textAlign(CENTER,CENTER);
     
-  // make the manager
-  Interactive.make(this);
+    // make the manager
+    Interactive.make( this );
     
-  buttons = new MSButton[NUM_ROWS][NUM_COLS];
-    
-  for (int i = 0; i < NUM_ROWS; i++) {
-    for (int j = 0; j < NUM_COLS; j++) {
-      buttons[i][j] = new MSButton(i, j);
+    //your code to initialize buttons goes here
+    buttons = new MSButton[NUM_ROWS][NUM_COLS];
+    for(int i=0;i<NUM_ROWS;i++){
+      for(int j=0;j<NUM_COLS;j++){
+        buttons[i][j] = new MSButton(i,j);
+      }
     }
-  }
-
-  setMines();
+    
+    setMines();
 }
-
 public void setMines(){
   int NUM_MINES = 0;
   while (NUM_MINES < 5){
@@ -32,7 +32,7 @@ public void setMines(){
     
     if (!(mines.contains(buttons[r][c]))){
       mines.add(buttons[r][c]);
-      //System.out.println(r + ", " + c);
+      System.out.println(r + ", " + c);
     }
     
     NUM_MINES++;
@@ -61,7 +61,7 @@ public void draw ()
     if(isWon() == true)
         displayWinningMessage();
         
-    displayScore();
+    //displayScore();
 }
 public boolean isWon()
 {
@@ -72,7 +72,7 @@ public boolean isWon()
       }
     }
   }
-  return false;
+  return true;
 }
 public void displayLosingMessage()
 {
@@ -81,6 +81,9 @@ public void displayLosingMessage()
       buttons[i][j].setLabel("X");
     }
   }
+  fill(255);
+  textSize(20);
+  text("Oh no!", width / 2, height - 20);
 }
 public void displayWinningMessage()
 {
@@ -89,15 +92,18 @@ public void displayWinningMessage()
       buttons[i][j].setLabel(":D");
     }
   }
+  fill(255);
+  textSize(20);
+  text("Congradulations!", width / 2, height - 20);
 }
 
 
-public void displayScore() {
-    // Display score
-    fill(255);
-    textSize(20);
-    text("Score: " + score, width / 2, height - 20);
-}
+//public void displayScore() {
+//    // Display score
+//    fill(255);
+//    textSize(20);
+//    text("Score: " + score, width / 2, height - 20);
+//}
 
 
 public boolean isValid(int r, int c)
@@ -147,23 +153,47 @@ public class MSButton
     // called by manager
     public void mousePressed () 
     {
+        int time = 0; 
         clicked = true;
         if(mouseButton == RIGHT){
           if(flagged == true){
             flagged = false;
+            clicked = false;
           } else {
             flagged = true;
-            clicked = false;
+            clicked = true;
           }
         } else if(mines.contains(buttons[myRow][myCol])){
-          displayLosingMessage();
+          for(int i = 0; i<mines.size();i++){
+            MSButton mine = mines.get(i);
+            mine.draw();
+          }
+          time++;
+          //displayLosingMessage();
         } else if(countMines(myRow, myCol) > 0){
           setLabel(countMines(myRow, myCol));
-          score++; /////////
+          //score++; /////////
         } else {
-          buttons[myRow][myCol-1].mousePressed();
+          revealNeighbor(myRow + 1, myCol - 1);
+          revealNeighbor(myRow + 1, myCol);
+          revealNeighbor(myRow + 1, myCol + 1);
+          revealNeighbor(myRow, myCol - 1);
+          revealNeighbor(myRow, myCol + 1);
+          revealNeighbor(myRow - 1, myCol - 1);
+          revealNeighbor(myRow - 1, myCol);
+          revealNeighbor(myRow - 1, myCol + 1);
         }
+      
+      if(time > 0){displayLosingMessage();}
     }
+    
+    private void revealNeighbor(int row, int col){
+      if(isValid(row, col) && !buttons[row][col].clicked){
+        buttons[row][col].mousePressed();
+      }
+    }
+    
+    
     public void draw () 
     {    
         if (flagged)
